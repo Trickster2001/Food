@@ -1,45 +1,16 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import FoodCard from './components/FoodCard'
 
 const apiKey = 'b8a0168936974549b29e0d940345f183'
 
 const Test = () => {
 
-  const [popular, setPopular] = useState([])
-
-  useEffect(()=>{
-    axios.get(`https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=10`)
-      .then((res)=>{
-          const data = (res.data.recipes)
-          console.log(data)
-          setPopular(data)
-      })
-      .catch((err)=>{
-        console.log(err)
-      })
-  },[])
-
   return (
     <>
-      <div className='h-full flex'>
-        <div className="h-[100vh] w-1/2 bg-blue-300 sticky top-0">Left</div>
-        <div className="w-1/2 overflow-y-scroll">
-          <div className='bg-red-400 h-[100vh]'>first</div>
-          <div className='bg-white h-52'>first</div>
-          <div className='bg-green-400 h-52'>first</div>
+        <div className="md:h-[100vh] sm:w-fit bg-blue-300 sticky top-0 z-[-10]">
+          <img className='md:h-fit md:w-fit' src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&h=1170&q=80" alt="" />
         </div>
-      </div>
-      <div>
-        <div>
-          {popular.map((res)=>{
-            return(
-              <div key={res.id}>
-                {res.title}
-              </div>
-            );
-          })}
-        </div>
-      </div>
     </>
   )
 }
