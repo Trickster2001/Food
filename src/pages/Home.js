@@ -9,18 +9,34 @@ const Home = () => {
   console.log(url)
   const [chicken, setChicken] = useState([])
 
+  const getPopular = async() =>{
+    const check = localStorage.getItem("popular");
+
+    if(check) {
+      setChicken(JSON.parse(check));
+    } else {
+
+      axios.get(url).then((res)=>{
+        console.log(res.data.results)
+        let my = res.data.results
+        setChicken(my)
+        console.log("axios is calling")
+        localStorage.setItem("popular", JSON.stringify(my))
+      })
+
+    }
+  }
+
   useEffect(()=>{
-    axios.get(url).then((res)=>{
-      console.log(res.data.results)
-      let my = res.data.results
-      setChicken(my)
-      console.log("chicken is", chicken)
-    })
+    getPopular()
+    console.log("Use effect is hitting")
   },[])
+
   return (
     <>
       <div className='md:flex mt-[84px]'>
         <div className='md:w-1/2'>
+          Add Splider Here
           <Test />
         </div>
         <div className='md:w-1/2'>

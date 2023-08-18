@@ -24,9 +24,9 @@ const RecipeDetail = () => {
   return (
     <>
       <div className='mt-[84px]'>
-        {steps.map((res)=>{
+        {steps.map((res,i)=>{
           return (
-            <div>
+            <div key={i}>
               {res}
             </div>
           )
