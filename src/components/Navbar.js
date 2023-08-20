@@ -1,12 +1,22 @@
 import React, { useState } from 'react'
 import {CiMenuBurger} from 'react-icons/ci'
 import {AiOutlineClose} from 'react-icons/ai'
-import Button from './Button'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+
 
 const Navbar = () => {
 
   const [open, setOpen] = useState(false);
+
+  const [search, setSearch] = useState('')
+
+  const navigate = useNavigate()
+
+  const submit = (e) => {
+    e.preventDefault();
+    navigate(`/searched/${search}`)
+    setSearch('')
+  }
 
 
   return (
@@ -21,9 +31,13 @@ const Navbar = () => {
           </div>
             <ul className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-red-200 md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-5 transition-all duration-500 ease-in ${open ? 'top-20 opacity-100' : 'top-[-490px]'}`}>
               <li className='md:ml-8 text-xl w-fit md:my-0 my-5 border-b border-red-50'>
-                <Link to={'/recipe/123'}>Home</Link>
+                <Link to={'/'}>Home</Link>
               </li>
-              <li className='border-b w-fit border-red-50 md:ml-8 text-xl md:my-0 my-5'>About</li>
+              <li className='border-b w-fit border-red-50 md:ml-8 text-xl md:my-0 my-5'>
+                <form onSubmit={submit} className='flex items-center'>
+                <input type="text" placeholder='Search Here...' className='outline-none px-2 rounded-md bg-transparent text-black placeholder:text-black' value={search} onChange={(e)=>{setSearch(e.target.value)}} />
+                </form>
+              </li>
               <li className='border-b w-fit  border-red-50 md:ml-8 text-xl md:my-0 my-5 font-semibold'>
             {/* <Button className="px-2"> */}
               Account

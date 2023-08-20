@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from 'react'
-
-import axios from 'axios'
 import { Link } from 'react-router-dom'
-import Recipe from './Recipe'
-const apiKey = 'b8a0168936974549b29e0d940345f183'
+
 
 
 const FoodCard = ({chicken}) => {
@@ -25,7 +21,6 @@ const FoodCard = ({chicken}) => {
               <Link to={`/recipe/${res.id}`} >
                 <h2 className='font-bold text-2xl p-2'>{res.title}</h2>
               </Link>
-                <h3 className=''>{res.id}</h3>
               </section>
             </div>
            );
@@ -38,13 +33,3 @@ const FoodCard = ({chicken}) => {
 }
 
 export default FoodCard
-
-
-
-        {/* {chicken.map((res)=>{
-          return (
-            <div key={res.id}>
-              <Recipe res={res}/>
-            </div>
-          )
-        })} */}
