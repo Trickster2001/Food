@@ -44,11 +44,11 @@ const Home = () => {
     <>
       <div className='md:flex mt-[84px]'>
         <div className='md:w-1/2 p-4'>
-          Add Splider Here
+          {/* Add Splider Here */}
           <Test />
         </div>
         <div className='md:w-1/2'>
-          <h2 className='p-2 text-3xl font-medium'>Winner Winner Chicken Dinner !!!</h2>
+          {/* <h2 className='p-2 text-3xl font-medium'>Winner Winner Chicken Dinner !!!</h2> */}
           <FoodCard chicken={chicken} />
         </div>
       </div>

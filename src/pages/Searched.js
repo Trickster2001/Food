@@ -1,8 +1,12 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { FaHeart, FaRegHeart } from 'react-icons/fa'
+import {AiOutlineHeart} from 'react-icons/ai'
 
 const Searched = () => {
+  // const [like, setLike] = useState(false)
+
   // const getData = async()=>{
   //   let res = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=pizza&number=10`)
   //   let data = await res.json()
@@ -63,9 +67,18 @@ const Searched = () => {
                 <Link to={`/recipe/${res.id}`}>
                   <img src={res.image} alt="" className='rounded-md' />
                 </Link>
+                  <div className='flex h-10 items-center'>
                 <Link to={`/recipe/${res.id}`} >
-                  <p className='text-xl font-semibold mt-2'>{res.title}</p>
+                    <div>
+                  <p className='text-xl font-semibold mr-2'>{res.title}</p>
+                    </div>
                 </Link>
+                    {/* <div>
+                    <p className='text-black text-xl'>
+                      {like ? <FaHeart/> : <FaRegHeart/>}
+                    </p>
+                    </div> */}
+                  </div>
               </div>
             </div>
           );

@@ -1,6 +1,10 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { UserAuth } from '../context/AuthContext';
+import { db } from '../Firebase';
+import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 const RecipeDetail = () => {
   const [details, setDetails] = useState({})
@@ -39,6 +43,29 @@ const RecipeDetail = () => {
     getDetails()
   }, [])
 
+  const [like, setLike] = useState(false)
+  const [saved, setSaved] = useState(false)
+  const { user } = UserAuth()
+
+  const recipeId = doc(db, 'users', `${user?.email}`)
+
+  const savedShow = async () => {
+    console.log("clicked")
+    if (user?.email) {
+      setLike(!like)
+      setSaved(true)
+      await updateDoc(recipeId, {
+        savedShow: arrayUnion({
+          id: details.id,
+          title: details.title,
+          img: details.image
+        })
+      })
+    } else {
+      alert("Please Log in first")
+    }
+  }
+
   return (
     <>
       <div className='sm:flex'>
@@ -52,27 +79,31 @@ const RecipeDetail = () => {
 
         </div>
         <div className='sm:mt-[100px] sm:w-[50%]'>
-          <div className='flex flex-col sm:flex-row'>
+          <div className='flex flex-col sm:flex-row sm:items-center'>
             <button onClick={() => setActive('instruction')} className={` border-2 border-black  py-4 px-8 mx-4 sm:mx-0 sm:mr-8 font-semibold rounded-sm hover:bg-black hover:text-white ${active === 'instruction' ? 'bg-black text-white' : 'bg-white text-black'}`}>Instructions</button>
 
             <button onClick={() => setActive('ingredients')} className={`border-2 border-black py-4 px-8 mx-4 sm:mx-0  mt-4 sm:mt-0 rounded-sm font-semibold hover:bg-black hover:text-white ${active === 'summary' ? 'bg-black text-white' : 'bg-white text-black'}`}>Ingredients</button>
 
+            <p onClick={savedShow} className='text-gray-600 text-4xl mx-auto p-4'>
+              {like ? <FaHeart /> : <FaRegHeart />}
+            </p>
+
           </div>
 
-          {active === 'instruction' && (<div> <p className='p-4 mt-4 sm:p-0 sm:pr-1' dangerouslySetInnerHTML={{__html: details.instructions}}></p>  <p className='p-4 mt-4 sm:p-0 sm:pr-1' dangerouslySetInnerHTML={{__html: details.summary}}></p></div>)}
+          {active === 'instruction' && (<div> <p className='p-4 mt-4 sm:p-0 sm:pr-1' dangerouslySetInnerHTML={{ __html: details.instructions }}></p>  <p className='p-4 mt-4 sm:p-0 sm:pr-1' dangerouslySetInnerHTML={{ __html: details.summary }}></p></div>)}
 
           {active === 'ingredients' && (<div className='p-4 mt-4 sm:p-0 sm:pr-1'>
             <div>
-              {details.extendedIngredients.map((ingredient)=>{
+              {details.extendedIngredients.map((ingredient) => {
                 return (
                   <li key={ingredient.image}>{ingredient.original}</li>
                 )
               })}
             </div>
-            </div>)}
+          </div>)}
         </div>
       </div>
-    
+
     </>
   )
 }
