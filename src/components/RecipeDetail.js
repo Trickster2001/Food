@@ -6,36 +6,38 @@ const RecipeDetail = () => {
   const [details, setDetails] = useState({})
   const { id } = useParams()
   const [active, setActive] = useState('instruction')
+  const myApi = process.env.REACT_APP_API_KEY
+  console.log(myApi)
 
-  // const getDetails = async () => {
-  //   const check = localStorage.getItem('details');
+  const getDetails = async () => {
+    const check = localStorage.getItem('details');
 
-  //   if (check) {
-  //     setDetails(JSON.parse(check));
-  //   } else {
-  //     axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=b8a0168936974549b29e0d940345f183`)
-  //       .then((res) => {
-  //         console.log(res)
-  //         let my = res.data
-  //         setDetails(res.data)
-  //         console.log("Use Effect running")
-  //         localStorage.setItem('details', JSON.stringify(my))
-  //       })
-  //   }
-  // }
+    if (check) {
+      setDetails(JSON.parse(check));
+    } else {
+      axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${myApi}`)
+        .then((res) => {
+          console.log(res)
+          let my = res.data
+          setDetails(res.data)
+          console.log("Use Effect running")
+          localStorage.setItem('details', JSON.stringify(my))
+        })
+    }
+  }
 
-  useEffect(()=>{
-    axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=b8a0168936974549b29e0d940345f183`)
-      .then((res)=>{
-        // console.log(res)
-        setDetails(res.data)
-        // console.log("Use Effect running")
-      })
-  },[id])
+  // useEffect(()=>{
+  //   axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${myApi}`)
+  //     .then((res)=>{
+  //       // console.log(res)
+  //       setDetails(res.data)
+  //       // console.log("Use Effect running")
+  //     })
+  // },[id])
 
-  // useEffect(() => {
-  //   getDetails()
-  // }, [])
+  useEffect(() => {
+    getDetails()
+  }, [])
 
   return (
     <>

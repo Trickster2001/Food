@@ -8,36 +8,37 @@ const Home = () => {
   const url = requests.requestChicken
   console.log(url)
   const [chicken, setChicken] = useState([])
+  const myApi = process.env.REACT_APP_API_KEY
 
-  // const getPopular = async() =>{
-  //   const check = localStorage.getItem("popular");
+  const getPopular = async() =>{
+    const check = localStorage.getItem("popular");
 
-  //   if(check) {
-  //     setChicken(JSON.parse(check));
-  //   } else {
+    if(check) {
+      setChicken(JSON.parse(check));
+    } else {
 
-  //     axios.get(url).then((res)=>{
-  //       console.log(res.data.results)
-  //       let my = res.data.results
-  //       setChicken(my)
-  //       console.log("axios is calling")
-  //       localStorage.setItem("popular", JSON.stringify(my))
-  //     })
+      axios.get(url).then((res)=>{
+        console.log(res.data.results)
+        let my = res.data.results
+        setChicken(my)
+        console.log("axios is calling")
+        localStorage.setItem("popular", JSON.stringify(my))
+      })
 
-  //   }
-  // }
-
-  // useEffect(()=>{
-  //   getPopular()
-  //   console.log("Use effect is hitting")
-  // },[])
+    }
+  }
 
   useEffect(()=>{
-    axios.get(`https://api.spoonacular.com/recipes/random?apiKey=b8a0168936974549b29e0d940345f183&number=10`).then((res)=>{
-      let my = res.data.recipes
-      setChicken(my)
-    })
+    getPopular()
+    console.log("Use effect is hitting")
   },[])
+
+  // useEffect(()=>{
+  //   axios.get(`https://api.spoonacular.com/recipes/random?apiKey=${myApi}&number=10`).then((res)=>{
+  //     let my = res.data.recipes
+  //     setChicken(my)
+  //   })
+  // },[])
 
   return (
     <>
